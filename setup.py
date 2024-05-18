@@ -7,7 +7,7 @@ with open("README.md", "r", encoding="utf-8") as f:
 
 __version__ = "0.0.0.1"
 
-REPO_NAME = "game_recommendation"
+REPO_NAME = "game_recommendation_app"
 AUTHOR_USER_NAME = "Rajarshi12321"
 SRC_REPO = "game_recommendation_app"
 AUTHOR_EMAIL = "royrajarshi0123@gmail.com"
@@ -18,7 +18,7 @@ setuptools.setup(
     version=__version__,
     author=AUTHOR_USER_NAME,
     author_email=AUTHOR_EMAIL,
-    description="A small python package for sentiment analysis app",
+    description="A small python package for game recommendation using RAG model",
     long_description=long_description,
     long_description_content="text/markdown",
     url=f"https://github.com/{AUTHOR_USER_NAME}/{REPO_NAME}",
