@@ -8,7 +8,7 @@ import os
 
 os.environ["LITERAL_API_KEY"] = os.getenv("LITERAL_API_KEY")
 
-os.environ["LANGCHAIN_PROJECT"] = GAME RECOMMENDATION
+os.environ["LANGCHAIN_PROJECT"] = "GAME RECOMMENDATION"
 
 os.environ["LANGCHAIN_TRACING_V2"] = "true"
 os.environ["LANGCHAIN_API_KEY"] = os.getenv("LANGCHAIN_API_KEY")

@@ -51,7 +51,7 @@ genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 gemini_api_key = os.getenv("GOOGLE_API_KEY")
 
 
-os.environ["LANGCHAIN_PROJECT"] = GAME RECOMMENDATION
+os.environ["LANGCHAIN_PROJECT"] = "GAME RECOMMENDATION"
 
 os.environ["LANGCHAIN_TRACING_V2"] = "true"
 langchain_api_key = os.environ["LANGCHAIN_API_KEY"] = os.getenv("LANGCHAIN_API_KEY")
@@ -119,7 +119,7 @@ prompt = ChatPromptTemplate.from_messages(
     [
         (
             "system",
-            "You are a Game recommendation system assistant. You are humble AI. Greet the user nicely and answer their queries"
+            "You are a "GAME RECOMMENDATION" system assistant. You are humble AI. Greet the user nicely and answer their queries"
             """Answer the question in your own words from the 
                 context given to you.
                 If questions are asked where there is no relevant context available, please answer from 
