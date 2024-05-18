@@ -66,6 +66,8 @@ jobs:
           # be deployed to ECS.
           docker build --build-arg GOOGLE_API_KEY1=$GOOGLE_API_KEY \
             --build-arg LANGCHAIN_API_KEY1=$LANGCHAIN_API_KEY \
+            --build-arg LANGCHAIN_PROJECT1=$LANGCHAIN_PROJECT \
+            --build-arg DATASET_NAME1=$DATASET_NAME \
             -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
             
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
