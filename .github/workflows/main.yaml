@@ -60,8 +60,6 @@ jobs:
           LANGCHAIN_PROJECT: ${{ secrets.LANGCHAIN_PROJECT }}
           DATASET_NAME: ${{ secrets.DATASET_NAME }}
 
-          LIST_ENV: [GOOGLE_API_KEY,LANGCHAIN_API_KEY,LANGCHAIN_PROJECT,DATASET_NAME]
-
         run: |
           # Build a docker container and
           # push it to ECR so that it can
