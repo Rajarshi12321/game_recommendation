@@ -9,6 +9,7 @@ curl -o actions-runner-linux-x64-2.316.1.tar.gz -L https://github.com/actions/ru
 
 echo "d62de2400eeeacd195db91e2ff011bfb646cd5d85545e81d8f78c436183e09a8  actions-runner-linux-x64-2.316.1.tar.gz" | shasum -a 256 -c
 
+
 tar xzf ./actions-runner-linux-x64-2.316.1.tar.gz
 
 ./config.sh --url https://github.com/Rajarshi12321/game_recommendation_app --token AWSY7XQOYHXWPQKGRAEQWRDGJD2GS
