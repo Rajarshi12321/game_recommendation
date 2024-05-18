@@ -6,6 +6,7 @@ variable "ami_os"{
     default = "ami-0f58b397bc5c1f2e8"  # Ubuntu 24.04 LTS AMI ID for ap-south-1, change accordingly
 }
 
+
 variable "instance_name"{
     default = "Game_recommender"
 }
