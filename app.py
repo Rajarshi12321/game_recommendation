@@ -62,12 +62,25 @@ langchain_endpoint = os.environ["LANGCHAIN_ENDPOINT"] = (
 )
 
 # Used LLM model
-model = ChatGoogleGenerativeAI(
-    model="gemini-1.5-pro-latest",
-    api_key=gemini_api_key,
-    temperature=0.3,
-    convert_system_message_to_human=True,
-)
+
+
+@st.async_()
+async def create_model(gemini_api_key):
+    model = ChatGoogleGenerativeAI(
+        model="gemini-1.5-pro-latest",
+        api_key=gemini_api_key,
+        temperature=0.3,
+        convert_system_message_to_human=True,
+    )
+    return model
+
+
+# model = ChatGoogleGenerativeAI(
+#     model="gemini-1.5-pro-latest",
+#     api_key=gemini_api_key,
+#     temperature=0.3,
+#     convert_system_message_to_human=True,
+# )
 
 
 # Configuring memory
