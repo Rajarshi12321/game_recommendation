@@ -51,7 +51,7 @@ genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 gemini_api_key = os.getenv("GOOGLE_API_KEY")
 
 
-os.environ["LANGCHAIN_PROJECT"] = os.getenv("LANGCHAIN_PROJECT")
+os.environ["LANGCHAIN_PROJECT"] = GAME RECOMMENDATION
 
 os.environ["LANGCHAIN_TRACING_V2"] = "true"
 langchain_api_key = os.environ["LANGCHAIN_API_KEY"] = os.getenv("LANGCHAIN_API_KEY")
