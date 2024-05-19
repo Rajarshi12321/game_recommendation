@@ -173,6 +173,7 @@ To use it you need to the following prerequisites:
 	2. AmazonEC2FullAccess
 
 2. Building the full infrastructure using Terraform </br></br>
+  1st you need to configure your aws account using the created IAM role by the command `aws configure` so that terraform can know which account to use </br></br>
   NOTE: If you don't want to use terraform for building infrastructure you can also build this manually from aws console:</br>
   For reference watch this video from `3:47:20` time frame : [Youtube link](https://www.youtube.com/watch?v=86BKEv0X2xU)</br></br>
   Get to the terraform directory: `infrastructure\terraform` and execute the following commands:
