@@ -192,8 +192,7 @@ To use it you need to the following prerequisites:
 
     </br></br>
 3. After this you Need to configure your EC2 instance to install Docker:
-</br>
-Run The Following commands:
+</br>Run The Following commands:
     ```shell  
     sudo apt-get update -y
 
