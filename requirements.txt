@@ -13,6 +13,5 @@ pandas
 google-play-scraper
 beautifulsoup4
 faiss-cpu
-uuid
 
 -e .

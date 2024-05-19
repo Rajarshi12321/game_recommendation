@@ -25,13 +25,11 @@ from langchain.callbacks.tracers.langchain import wait_for_all_tracers
 
 import streamlit as st
 from streamlit_feedback import streamlit_feedback
-from uuid import uuid4
 
 
 from langsmith import Client
 
 from langchain_core.tracers.context import collect_runs
-from uuid import uuid4
 
 
 from dotenv import load_dotenv
@@ -43,7 +41,7 @@ from langchain_google_genai import GoogleGenerativeAIEmbeddings
 ## Loading APIs
 
 load_dotenv()
-os.getenv("GOOGLE_API_KEY")
+
 embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
 
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
@@ -51,10 +49,11 @@ genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 gemini_api_key = os.getenv("GOOGLE_API_KEY")
 
 
-os.environ["LANGCHAIN_PROJECT"] = "GAME RECOMMENDATION"
+os.environ["LANGCHAIN_PROJECT"] = "GAME RECOMMENDATION"  # Set your custom project name
 
 os.environ["LANGCHAIN_TRACING_V2"] = "true"
-langchain_api_key = os.environ["LANGCHAIN_API_KEY"] = os.getenv("LANGCHAIN_API_KEY")
+os.environ["LANGCHAIN_API_KEY"] = os.getenv("LANGCHAIN_API_KEY")
+langchain_api_key = os.getenv("LANGCHAIN_API_KEY")
 
 # Update with your API URL if using a hosted instance of Langsmith.
 langchain_endpoint = os.environ["LANGCHAIN_ENDPOINT"] = (
@@ -64,23 +63,21 @@ langchain_endpoint = os.environ["LANGCHAIN_ENDPOINT"] = (
 # Used LLM model
 
 
-@st.async_()
-async def create_model(gemini_api_key):
-    model = ChatGoogleGenerativeAI(
-        model="gemini-1.5-pro-latest",
-        api_key=gemini_api_key,
-        temperature=0.3,
-        convert_system_message_to_human=True,
-    )
-    return model
+# Adding an event loop
+import asyncio
+import aiohttp
 
 
-# model = ChatGoogleGenerativeAI(
-#     model="gemini-1.5-pro-latest",
-#     api_key=gemini_api_key,
-#     temperature=0.3,
-#     convert_system_message_to_human=True,
-# )
+loop = asyncio.new_event_loop()
+asyncio.set_event_loop(loop)
+
+
+model = ChatGoogleGenerativeAI(
+    model="gemini-1.5-pro-latest",
+    api_key=gemini_api_key,
+    temperature=0.3,
+    convert_system_message_to_human=True,
+)
 
 
 # Configuring memory
@@ -102,18 +99,26 @@ retriever = new_db.as_retriever()
 # Configuring Langsmith Client
 client = Client(api_url=langchain_endpoint, api_key=langchain_api_key)
 
-# Getting best feedback examples to save in the memory context
-examples = client.list_examples(
-    dataset_name="Feedbacks"
-)  # Choose your dataset_name here
 
-my_examples = []
+# Introducing try catch block in case you don't have a dataset with good feed back examples
+try:
+    # Getting best feedback examples to save in the memory context
+    examples = client.list_examples(
+        dataset_name="Feedbacks"
+    )  # Choose your dataset_name here
 
-for i in examples:
-    print(i.inputs)
-    print(i.outputs["output"]["content"])
-    print("\n\n--------\n\n")
-    my_examples.append((i.inputs["input"], {"output": i.outputs["output"]["content"]}))
+    my_examples = []
+
+    for i in examples:
+        print(i.inputs)
+        print(i.outputs["output"]["content"])
+        print("\n\n--------\n\n")
+        my_examples.append(
+            (i.inputs["input"], {"output": i.outputs["output"]["content"]})
+        )
+
+except:
+    my_examples = []
 
 
 # Configuring our runnablemap
@@ -141,7 +146,9 @@ prompt = ChatPromptTemplate.from_messages(
 
                 Context: {context}
                 
-                Here are some impressive examples of Human feedback, Do your best to try to generate these type of answer format for the specific format of questions, The examples are listed below:
+                Here are some impressive examples of Human feedback, Do your best to try to generate these type of answer format for the specific format of questions 
+                (Remember if you get empty list or no examples,then you can avoid considering those as examples,just be a helpful nice chat bot ready to help with choosing good games to play for the user), 
+                The examples are listed below :
                 {examples}
 
                 
@@ -181,11 +188,13 @@ if st.session_state.trace_link:
         unsafe_allow_html=True,
     )
 
+st.header("Hey Gamers, I am a Game Recommender 🤖", divider="rainbow")
 
 for msg in st.session_state.langchain_messages:
     avatar = "🤖" if msg.type == "ai" else None
     with st.chat_message(msg.type, avatar=avatar):
         st.markdown(msg.content)
+
 
 # The main chatbot configuration to get desired out and create runs for Langsmith
 if prompt := st.chat_input(placeholder="Ask me a question!"):
