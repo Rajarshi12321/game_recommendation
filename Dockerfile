@@ -1,25 +1,17 @@
-# Stage 1: Build dependencies (slim base for efficiency)
-FROM python:3.10-slim AS builder
+FROM python:3.10-slim
 
 WORKDIR /app
 
 COPY . /app
 
+
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    ca-certificates \
-    netbase \
-    && rm -rf /var/lib/apt/lists/*
+        ca-certificates \
+        netbase \
+        && rm -rf /var/lib/apt/lists/*
 
 RUN pip3 install -r requirements.txt
 
-# Stage 2: Production image (minimal base for security)
-FROM python:3.10-slim
-
-WORKDIR /app
-
-COPY --from=builder /app /app
-
-# Environment variables (replace with actual keys)
 ARG GOOGLE_API_KEY1
 ENV GOOGLE_API_KEY=$GOOGLE_API_KEY1
 
