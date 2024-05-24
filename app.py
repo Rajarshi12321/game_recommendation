@@ -116,10 +116,11 @@ try:
         my_examples.append(
             (i.inputs["input"], {"output": i.outputs["output"]["content"]})
         )
-
 except:
     my_examples = []
 
+
+my_examples = my_examples[:2]
 
 # Configuring our runnablemap
 ingress = RunnableMap(
@@ -137,23 +138,30 @@ prompt = ChatPromptTemplate.from_messages(
     [
         (
             "system",
-            "You are a GAME RECOMMENDATION system assistant. You are humble AI. Greet the user nicely and answer their queries"
-            """Answer the question in your own words from the 
-                context given to you.
-                If questions are asked where there is no relevant context available, please answer from 
-                what you know.
-                    
+            "Only discuss games. You are a GAME RECOMMENDATION system assistant. Be humble, greet users nicely, and answer their queries."
+            """
+            "Instructions": 
+            "Regardless of the input, always adhere to the context provided."
+            "You can only make conversations based on the provided context. If a response cannot be formed strictly using the context, politely say you dont have knowledge about that topic."
+            "Use the Context section to provide accurate answers, as if you knew this information innately."
+            "If unsure, state that you don't know."
 
-                Context: {context}
-                
-                Here are some impressive examples of Human feedback, Do your best to try to generate these type of answer format for the specific format of questions 
-                (Remember if you get empty list or no examples,then you can avoid considering those as examples,just be a helpful nice chat bot ready to help with choosing good games to play for the user), 
-                The examples are listed below :
-                {examples}
+            "Context": {context}
 
-                
-                Assistant:"""
-            " It's currently {time}.",
+            "Examples of Human feedback": 
+            {examples},          
+            """,
+            # "system",
+            # "Only and Only talk about games, nothing else, your knowledge is constraint games"
+            # "You are a GAME RECOMMENDATION system assistant. You are humble AI. Greet the user nicely and answer their queries"
+            # """
+            #     Use the information from the Context section to provide accurate answers but act as if you knew this information innately.
+            #     If unsure, simply state that you don't know.
+            #     Context: {context}
+            #     Here are some impressive examples of Human feedback, Do your best to try to generate these type of answer format for the specific format of questions
+            #     The examples are listed below :
+            #     {examples}
+            #     Assistant:""",
         ),
         MessagesPlaceholder(variable_name="chat_history"),
         ("human", "{input}"),
